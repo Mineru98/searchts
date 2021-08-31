@@ -13,7 +13,7 @@ tsql is intended to provide a native JSON query format for querying anything, al
 
 ## Reference Implementation
 
-The reference implementation, searchts, uses tsql to query a JS object, or an array of objects, and to return those results that match
+The reference implementation, searchts, uses tsql to query a TS object, or an array of objects, and to return those results that match
 the query.
 
 ## Syntax Definition
@@ -264,7 +264,7 @@ Composities can be layered inside composites, since each term in `terms` can its
 5. `{_not: true, name: "John", age: 30}` - all records that have name !== "John" (ignore-case) AND age !== 30
 6. `{_not: true, _join: "OR", name: "John", age: 30}` - all records that have name !== "John" (ignore-case) OR age !== 30
 7. `{_join: "OR", terms: [{name:"John", age:30},{age:35}]}` - all records that have (name === "John" && age === 30) || (age === 35)
-8. `{email: "john@foo.com"}` - all records that have the email === "john@foo.com", if the record has email as a string; or if email is an array, then each element is checked; or if email is an object, then the keys are checked. All of the following will match: `{email:"john@foo.com"}` and `{email:["john@foo.com","js@gmail.com"]}` and `{email:{"john@foo.com":true}}`
+8. `{email: "john@foo.com"}` - all records that have the email === "john@foo.com", if the record has email as a string; or if email is an array, then each element is checked; or if email is an object, then the keys are checked. All of the following will match: `{email:"john@foo.com"}` and `{email:["john@foo.com","ts@gmail.com"]}` and `{email:{"john@foo.com":true}}`
 9. `{name:["John","Jill"]}` - all records that have name === "John" || name === "Jill"
 10. `{email:["john@foo.com","jf@gmail.com"]}` - all records that have email === "john@foo.com" || email === "jf@gmail.com" OR email in the record is an array, and at least one value in that array is "john@foo.com" or "jf@gmail.com"
 11. `{_not: true, name:["John","Jill"]}` - all records that have name !== "John" && name !== "Jill"
@@ -299,7 +299,7 @@ Browser-version is being worked on. There is nothing node-specific about searcht
 
 Next, require it using:
 
-```js
+```ts
 // for commonjs
 var s = require("searchts");
 // for es6
@@ -312,7 +312,7 @@ Make a query. There are three types of searches: object, array of objects, and s
 -   `matchArray(array,tsqlObject)`: matchArray returns an array of items, subset of the passed array, that match match the given search.
 -   `matchField(value,comparator,text,word)`: check if a single `value` matches a given comparator.
 
-All objects are stateless. The following examples show how to use matchObject and matchArray. For more details, look at the test.js
+All objects are stateless. The following examples show how to use matchObject and matchArray. For more details, look at the test.ts
 file included with searchts.
 
 ```TypeScript
