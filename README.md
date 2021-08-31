@@ -2,7 +2,7 @@
 
 ![Build Status](https://github.com/Mineru98/searchts/workflows/Continuous%20Integration/badge.svg)
 
-[![codecov](https://codecov.io/gh/Mineru98/searchts/branch/master/graph/badge.svg)](https://codecov.io/gh/Mineru98/searchts)
+[![codecov](https://codecov.io/gh/Mineru98/searchts/branch/main/graph/badge.svg)](https://codecov.io/gh/Mineru98/searchts)
 
 ## Overview
 
