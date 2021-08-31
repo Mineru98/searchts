@@ -1,0 +1,51 @@
+{
+	"name": "searchts",
+	"description": "A library for filtering TypeScript objects based on a json SQL-like language, tsql",
+	"version": "0.0.1",
+	"url": "http://github.com/Mineru98/searchts",
+	"author": "Mineru (https://github.com/Mineru98)",
+	"license": "MIT",
+	"contributors": [
+		{
+			"name": "Mineru",
+			"url": "http://github.com/Mineru98"
+		}
+	],
+	"engines": {
+		"node": ">=0.8"
+	},
+	"main": "./lib/searchts.ts",
+	"module": "src/searchts.ts",
+	"files": [
+		"/lib",
+		"src"
+	],
+	"repository": {
+		"type": "git",
+		"url": "http://github.com/Mineru98/searchts.git"
+	},
+	"bugs": "https://github.com/Mineru98/searchts/issues",
+	"devDependencies": {
+		"@babel/core": "^7.5.5",
+		"@babel/plugin-external-helpers": "^7.2.0",
+		"@babel/preset-env": "^7.5.5",
+		"@babel/register": "^7.5.5",
+		"codecov": "^3.6.5",
+		"mocha": "^6.2.0",
+		"nyc": "^12.0.2",
+		"rollup": "^0.61.2",
+		"rollup-plugin-babel": "^4.3.3",
+		"should": "^13.2.1",
+		"typescript": "^4.4.2",
+		"uglify-js": "^3.4.1"
+	},
+	"scripts": {
+		"build": "NODE_ENV=prod rollup -c && npm run uglify",
+		"prepublishOnly": "npm run-script build",
+		"uglify": "uglifyjs ./lib/searchjs.js --compress --mangle --comments -o ./lib/searchjs.min.js",
+		"test": "NODE_ENV=test mocha --require  @babel/register ./test/test.js --reporter spec",
+		"test-watch": "NODE_ENV=test mocha --watch --require  @babel/register ./test/test.js --reporter spec",
+		"coverage": "nyc npm test"
+	},
+	"dependencies": {}
+}
