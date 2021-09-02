@@ -1,11 +1,7 @@
 import { toType, deepField } from "./util";
-import { _getOptions } from "./option";
+import { IDefault, IData, ISearchOps, IOptions, _getOptions } from "./option";
 
-interface IData {
-	[key: string]: any;
-}
-
-let _defaults: IData = {};
+let _defaults: IData = {} as IData;
 
 // Allows to overwrite the global default values
 export function setDefaults(options: IData): void {
@@ -15,16 +11,16 @@ export function setDefaults(options: IData): void {
 }
 
 export function resetDefaults(): void {
-	_defaults = {};
+	_defaults = {} as IData;
 }
 
-export function singleMatch(field: any, s, text, word, regexp, start, end) {
+export function _singleMatch(field: any, s: any, text: boolean, word: boolean, regexp: boolean, start: boolean, end: boolean): boolean {
 	let oneMatch: boolean = false,
 		t: string,
-		re,
-		j,
-		from,
-		to;
+		re: RegExp,
+		j: number,
+		from: any,
+		to: any;
 	// for numbers, exact match; for strings, ignore-case match; for anything else, no match
 	t = typeof field;
 	if (field === null) {
@@ -59,7 +55,7 @@ export function singleMatch(field: any, s, text, word, regexp, start, end) {
 			oneMatch = field.indexOf(s) !== -1;
 		} else if (regexp) {
 			// strip the first slash and last slash
-			re = regexParser(s);
+			re = _regexParser(s);
 			oneMatch = field && field.match(re) !== null;
 		} else if (word) {
 			re = new RegExp("(\\s|^)" + s + "(?=\\s|$)", "i");
@@ -85,7 +81,7 @@ export function singleMatch(field: any, s, text, word, regexp, start, end) {
 	} else if (field.length !== undefined) {
 		// array, so go through each
 		for (j = 0; j < field.length; j++) {
-			oneMatch = singleMatch(field[j], s, text, word, regexp, start, end);
+			oneMatch = _singleMatch(field[j], s, text, word, regexp, start, end);
 			if (oneMatch) {
 				break;
 			}
@@ -96,11 +92,11 @@ export function singleMatch(field: any, s, text, word, regexp, start, end) {
 	return oneMatch;
 }
 
-export function matchArray(ary: IData[], search) {
+export function matchArray(ary: IData[], search: ISearchOps) {
 	let matched = false,
 		i,
 		ret = [],
-		options = _getOptions(search, _defaults);
+		options = _getOptions(search, _defaults as IDefault);
 	if (ary && ary.length > 0) {
 		for (i = 0; i < ary.length; i++) {
 			matched = _matchObj(ary[i], search, options);
@@ -112,14 +108,13 @@ export function matchArray(ary: IData[], search) {
 	return ret;
 }
 
-export function matchObject(obj: IData, search) {
-	const options = _getOptions(search, _defaults);
+export function matchObject(obj: IData, search: ISearchOps): boolean {
+	const options = _getOptions(search, _defaults as IDefault);
 	return _matchObj(obj, search, options);
 }
 
-function _matchObj(obj, search, options) {
-	let i, j, matched, oneMatch, ary, searchTermParts;
-	search = search || {};
+function _matchObj(obj: IData, search: ISearchOps = {} as ISearchOps, options: IOptions): boolean {
+	let i: string, j: number, matched: boolean, oneMatch: boolean, ary: ISearchOps[], searchTermParts: string[];
 
 	// if joinAnd, then matched=true until we have a single non-match; if !joinAnd, then matched=false until we have a single match
 	matched = !!options.joinAnd;
@@ -149,7 +144,7 @@ function _matchObj(obj, search, options) {
 				searchTermParts = i.split(options.separator);
 				ary = [].concat(search[i]);
 				for (j = 0; j < ary.length; j++) {
-					oneMatch = singleMatch(
+					oneMatch = _singleMatch(
 						deepField(obj, searchTermParts, options.propertySearch, options.propertySearchDepth),
 						ary[j],
 						options.text,
@@ -182,7 +177,7 @@ function _matchObj(obj, search, options) {
 	return matched;
 }
 
-function regexParser(input) {
+function _regexParser(input: string): RegExp {
 	// Parse input
 	var m = input.match(/(\/?)(.+)\1([a-z]*)/i);
 

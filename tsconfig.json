@@ -1,15 +1,18 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
+		"target": "es5",
+		"module": "esnext", //commonjs
+		"lib": ["es5", "es6", "dom", "esnext"],
 		"declaration": true,
 		"removeComments": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"allowSyntheticDefaultImports": true,
-		"target": "es2019",
-		"sourceMap": true,
-		"outDir": "./dist",
-		"baseUrl": "./src",
+		"sourceMap": false,
+		"outDir": "./lib",
+		"baseUrl": "src",
 		"incremental": true
-	}
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules", "test"]
 }

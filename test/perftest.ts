@@ -2,7 +2,7 @@
 /*
  * Performance test courtesy of @janober http://github.com/janober
  */
-var search = require("../lib/searchjs");
+import * as search from "../src/searchts";
 
 var numListItems = 1000;
 var numSearches = 100;

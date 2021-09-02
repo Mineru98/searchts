@@ -1,7 +1,7 @@
 {
 	"name": "searchts",
 	"description": "A library for filtering TypeScript objects based on a json SQL-like language, tsql",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"url": "http://github.com/Mineru98/searchts",
 	"author": "Mineru (https://github.com/Mineru98)",
 	"license": "MIT",
@@ -30,22 +30,30 @@
 		"@babel/plugin-external-helpers": "^7.2.0",
 		"@babel/preset-env": "^7.5.5",
 		"@babel/register": "^7.5.5",
+		"@rollup/plugin-typescript": "^8.2.5",
+		"@types/chai": "^4.2.21",
+		"@types/mocha": "^9.0.0",
+		"@types/node": "^16.7.10",
+		"chai": "^4.3.4",
 		"codecov": "^3.6.5",
-		"mocha": "^6.2.0",
+		"mocha": "^9.1.1",
 		"nyc": "^12.0.2",
-		"rollup": "^0.61.2",
-		"rollup-plugin-babel": "^4.3.3",
+		"rollup": "^2.56.3",
 		"should": "^13.2.1",
+		"ts-node": "^10.2.1",
+		"tslib": "^2.3.1",
 		"typescript": "^4.4.2",
 		"uglify-js": "^3.4.1"
 	},
 	"scripts": {
-		"build": "NODE_ENV=prod rollup -c && npm run uglify",
-		"prepublishOnly": "npm run-script build",
-		"uglify": "uglifyjs ./lib/searchjs.js --compress --mangle --comments -o ./lib/searchjs.min.js",
-		"test": "NODE_ENV=test mocha --require  @babel/register ./test/test.js --reporter spec",
-		"test-watch": "NODE_ENV=test mocha --watch --require  @babel/register ./test/test.js --reporter spec",
-		"coverage": "nyc npm test"
+		"tsc": "rm -rf lib && tsc",
+		"build": "rm -rf lib && NODE_ENV=prod rollup -c && yarn uglify",
+		"prepublishOnly": "yarn build",
+		"uglify": "uglifyjs ./lib/searchts.ts --compress --mangle --comments -o ./lib/searchts.min.js",
+		"test": "NODE_ENV=test mocha -r ts-node/register ./test/test.ts --reporter spec",
+		"test-watch": "NODE_ENV=test mocha --watch -r ts-node/register ./test/test.ts --reporter spec",
+		"bundle": "rollup -c",
+		"coverage": "nyc yarn test"
 	},
 	"dependencies": {}
 }
