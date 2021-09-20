@@ -54,13 +54,13 @@ Primitives will search against individual values and against one or more matches
 
 You are not limited to searching only at the top level. You also can do deep searching on an object of an object using dot-notation. So if you want to match on the object `{city: {Montreal: true}}` then you can search:
 
-```TypeScript
+```typescript
 {"city.Montreal": true}
 ```
 
 The above is a search primitive that checks that the field "city" has an object as its value, which in turn has a key "Montreal" with a value of `true`. You can go as deep as you want. The following is a completely valid deep-search primitive:
 
-```TypeScript
+```typescript
 {"country.province.city.street":"Dorchester Blvd"}
 ```
 
@@ -83,13 +83,13 @@ and then checks if it matches.
 
 The following search would find the item below:
 
-```TypeScript
+```typescript
 {"name":"tom", _propertySearch:true}
 ```
 
 Item:
 
-```TypeScript
+```typescript
 {"level1":{"level2":{"level3":{name: "tom"}}}}
 ```
 
@@ -98,7 +98,7 @@ This works also in combination with `Deep Search`.
 It is possible to omit any level in between. So all the following queries will
 match the above item.
 
-```TypeScript
+```typescript
 {"name":"tom", "_propertySearch": true}
 {"level1.name":"tom", "_propertySearch": true}
 {"level1.level2.name":"tom", "_propertySearch": true}
@@ -111,13 +111,13 @@ match the above item.
 It is also possible _and often recommended_ to limit the search depth. The following query would match
 the above item:
 
-```TypeScript
+```typescript
 {"name": "tom", "_propertySearch": true, "_propertySearchDepth": 4}
 ```
 
 However this one would not because it stops the search one level before:
 
-```TypeScript
+```typescript
 {"name":"tom", "_propertySearch": true, "_propertySearchDepth": 3}
 ```
 
@@ -127,20 +127,22 @@ searchts normally matches exactly the objects and depths you provide. With Prope
 
 If the value of a field in a primitive is an array, then it will accept a match of any one of the array values.
 
-```TypeScript
+```typescript
 {name:["John","Jack"]} // accepts any record where the name field matches 'John' or 'Jack'
 {_join:"OR",terms:[{name:"John"},{name:"Jack"}]} // equivalent to the previous
 ```
 
 Additionally, if the target record also has an array, it will accept a match if _any one_ of the values in the array of the record matches _any one_ of the values in the array of the search term.
 
-```TypeScript
-{name:["John","Jack"]}
+```typescript
+{
+	name: ["John", "Jack"];
+}
 ```
 
 will match any of these:
 
-```TypeScript
+```typescript
 {name:"John",phone:"+12125551212"}
 {name:"Jack",location:"Canada"}
 {name:["John","Jim"],company:"Hot Startup"}
@@ -150,7 +152,7 @@ will match any of these:
 
 If the value of a field in a primitive is an object with "from", "to", "gt", "lt", "gte" or "lte" fields, then it will treat it as a range.
 
-```TypeScript
+```typescript
 {age:{from:30}}  // accepts any age >=30
 {age:{gte:30}}  // accepts any age >=30
 {age:{gt:30}}  // accepts any age >30
@@ -174,7 +176,7 @@ Modifiers change the search term of a primitive.
 
 Negation just sets the opposite. Instead of checking if the "name" field equals "John", you can check if it does _not_ equal "John":
 
-```TypeScript
+```typescript
 {name:"John",_not:true}   // match all records in which name !== "John"
 ```
 
@@ -184,7 +186,7 @@ Just add the field `_not` to the primitive and set it to `true`. If the `_not` f
 
 Join determines how multiple fields are put together. Instead of checking if "name" equals "John" AND "age" equals 30, you can check if "name" equals "John" OR "age" equals 30:
 
-```TypeScript
+```typescript
 {name:"John",age:30,_join:"OR"}   // match all records in which name === "John" || age === 30
 ```
 
@@ -227,7 +229,7 @@ support having regex as a value, you need to do two things to make this work:
 
 For example:
 
-```
+```typescript
 {"_regexp": true, "name": "/ames/i"}
 ```
 
@@ -249,7 +251,7 @@ You can change the separator from '.' to any other character that makes you happ
 
 If you want to combine multiple composites into a single search term, you put them in an array, name it "terms", and create a composite search term. You can search for ("name" equals "John" and age equals 30) OR ("name" equals "Jill" and "location" equals "Canada"):
 
-```TypeScript
+```typescript
 {_join:"OR",terms:[{name:"John",age:30},{name:"Jill",location:"Canada"}]}
 ```
 
@@ -279,21 +281,15 @@ Composities can be layered inside composites, since each term in `terms` can its
 20. `{_not: true, name: "John", age: {from:30, to:35}}` - all records that have name !== "John" && age !(>= 30 && age <=35)
 21. `{terms:[{name: "John"}, {_not: true, age: {from:30, to:35}}]}` - all records that have name === "John" && age !(>= 30 && age <=35)
 
-# searchts
-
-## Overview
-
-searchts is the reference implementation of tsql. It uses tsql to check if an object matches a query, or to go through a
-list of objects and return those that match. For now, it uses objects in memory only; in the future, it could be extended
-to other data stores.
-
 ## Installation & Usage
 
 ### Node
 
 In node, install using:
 
-    npm install searchts
+```bash
+npm install searchts
+```
 
 Browser-version is being worked on. There is nothing node-specific about searchts.
 
@@ -315,11 +311,14 @@ Make a query. There are three types of searches: object, array of objects, and s
 All objects are stateless. The following examples show how to use matchObject and matchArray. For more details, look at the test.ts
 file included with searchts.
 
-```TypeScript
-var list = [{name:"John",age:25},{name:"Jill",age:30}];
-matches = s.matchObject(list[0],{name:"Johnny"}); // returns false
-matches = s.matchArray(list,{name:"John"}); // returns [{name:"John",age:25}]
-matches = s.matchField(list[0].name,"John"); // returns true
+```typescript
+var list = [
+	{ name: "John", age: 25 },
+	{ name: "Jill", age: 30 },
+];
+matches = s.matchObject(list[0], { name: "Johnny" }); // returns false
+matches = s.matchArray(list, { name: "John" }); // returns [{name:"John",age:25}]
+matches = s.matchField(list[0].name, "John"); // returns true
 ```
 
 #### matchField
@@ -377,7 +376,7 @@ The comparator can be one of the following, and match based on the following com
 
 Most of the functionality in searchts has a given set of defaults. If you wish to override those defaults globally, you can do so as follows:
 
-```TypeScript
+```typescript
 import * as searchts from "searchts";
 searchts.setDefaults(defaults);
 ```
@@ -396,12 +395,15 @@ As of this writing, the following defaults can be overridden:
 
 At any point, you can reset defaults by doing:
 
-```TypeScript
+```typescript
 s.resetDefaults();
 ```
 
-```TypeScript
-var list = [{name:"John",age:25},{name:"Jill",age:30}];
-matches = SEARCHTS.matchObject(list[0],{name:"Johnny"}); // returns false
-matches = SEARCHTS.matchArray(list,{name:"John"}); // returns [{name:"John",age:25}]
+```typescript
+var list = [
+	{ name: "John", age: 25 },
+	{ name: "Jill", age: 30 },
+];
+matches = SEARCHTS.matchObject(list[0], { name: "Johnny" }); // returns false
+matches = SEARCHTS.matchArray(list, { name: "John" }); // returns [{name:"John",age:25}]
 ```
