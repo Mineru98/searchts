@@ -66,6 +66,5 @@
 		"test-watch": "NODE_ENV=test mocha --watch -r ts-node/register ./test/test.ts --reporter spec",
 		"coverage": "nyc yarn test",
 		"prepublishOnly": "npm run build"
-	},
-	"dependencies": {}
+	}
 }

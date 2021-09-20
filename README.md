@@ -2,8 +2,6 @@
 
 ![Build Status](https://github.com/Mineru98/searchts/workflows/Continuous%20Integration/badge.svg)
 
-[![codecov](https://codecov.io/gh/Mineru98/searchts/branch/main/graph/badge.svg)](https://codecov.io/gh/Mineru98/searchts)
-
 ## Overview
 
 tsql is a TypeScript query language, along with a simple TypeScript objects (POJSO) reference implementation.
