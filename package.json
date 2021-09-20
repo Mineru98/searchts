@@ -1,5 +1,5 @@
 {
-	"name": "searchts",
+	"name": "@mineru98/searchts",
 	"description": "A library for filtering TypeScript objects based on a json SQL-like language, tsql",
 	"version": "1.0.0",
 	"url": "http://github.com/Mineru98/searchts",
@@ -15,6 +15,7 @@
 		"node": ">=0.8"
 	},
 	"main": "./lib/searchts.ts",
+	"types": "./lib/index.d.ts",
 	"module": "src/searchts.ts",
 	"files": [
 		"/lib",
@@ -25,12 +26,26 @@
 		"url": "http://github.com/Mineru98/searchts.git"
 	},
 	"bugs": "https://github.com/Mineru98/searchts/issues",
+	"keywords": [
+		"search",
+		"searchts",
+		"searchjs",
+		"search-ts",
+		"search-js",
+		"object-search",
+		"search-object",
+		"query",
+		"sql"
+	],
+	"babel": {
+		"presets": [
+			"@babel/preset-typescript"
+		]
+	},
 	"devDependencies": {
+		"@babel/cli": "^7.5.5",
 		"@babel/core": "^7.5.5",
-		"@babel/plugin-external-helpers": "^7.2.0",
-		"@babel/preset-env": "^7.5.5",
-		"@babel/register": "^7.5.5",
-		"@rollup/plugin-typescript": "^8.2.5",
+		"@babel/preset-typescript": "^7.15.0",
 		"@types/chai": "^4.2.21",
 		"@types/mocha": "^9.0.0",
 		"@types/node": "^16.7.10",
@@ -38,22 +53,19 @@
 		"codecov": "^3.6.5",
 		"mocha": "^9.1.1",
 		"nyc": "^12.0.2",
-		"rollup": "^2.56.3",
 		"should": "^13.2.1",
 		"ts-node": "^10.2.1",
 		"tslib": "^2.3.1",
-		"typescript": "^4.4.2",
-		"uglify-js": "^3.4.1"
+		"typescript": "^4.4.2"
 	},
 	"scripts": {
-		"tsc": "rm -rf lib && tsc",
-		"build": "rm -rf lib && NODE_ENV=prod rollup -c && yarn uglify",
-		"prepublishOnly": "yarn build",
-		"uglify": "uglifyjs ./lib/searchts.ts --compress --mangle --comments -o ./lib/searchts.min.js",
+		"build": "npm run build:ts && npm run build:babel",
+		"build:ts": "rm -rf lib && tsc",
+		"build:babel": "babel lib --out-dir lib --extensions \".ts\" --source-maps inline",
 		"test": "NODE_ENV=test mocha -r ts-node/register ./test/test.ts --reporter spec",
 		"test-watch": "NODE_ENV=test mocha --watch -r ts-node/register ./test/test.ts --reporter spec",
-		"bundle": "rollup -c",
-		"coverage": "nyc yarn test"
+		"coverage": "nyc yarn test",
+		"prepublishOnly": "npm run build"
 	},
 	"dependencies": {}
 }
