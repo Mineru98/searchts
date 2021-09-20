@@ -4,6 +4,8 @@
 
 ## Overview
 
+> [searchjs](https://github.com/deitch/searchjs)'s implementation via typescript.
+
 tsql is a TypeScript query language, along with a simple TypeScript objects (POJSO) reference implementation.
 
 This is not intended to search the dom, or jQuery, or some specific database, nor is it intended to enable using SQL in a browser.
