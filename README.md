@@ -404,6 +404,6 @@ var list = [
 	{ name: "John", age: 25 },
 	{ name: "Jill", age: 30 },
 ];
-matches = SEARCHTS.matchObject(list[0], { name: "Johnny" }); // returns false
-matches = SEARCHTS.matchArray(list, { name: "John" }); // returns [{name:"John",age:25}]
+matches = searchts.matchObject(list[0], { name: "Johnny" }); // returns false
+matches = searchts.matchArray(list, { name: "John" }); // returns [{name:"John",age:25}]
 ```
