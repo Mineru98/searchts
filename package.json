@@ -60,7 +60,7 @@
 	},
 	"scripts": {
 		"build": "npm run build:ts && npm run build:babel",
-		"build:ts": "rm -rf lib && tsc",
+		"build:ts": "rm -rf lib && tsc --out lib/searchts",
 		"build:babel": "babel lib --out-dir lib --extensions \".ts\" --source-maps inline",
 		"test": "NODE_ENV=test mocha -r ts-node/register ./test/test.ts --reporter spec",
 		"test-watch": "NODE_ENV=test mocha --watch -r ts-node/register ./test/test.ts --reporter spec",
