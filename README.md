@@ -297,9 +297,9 @@ Next, require it using:
 
 ```ts
 // for commonjs
-let s = require("searchts");
+const searchts = require("@mineru98/searchts");
 // for es6
-import * as searchts from "searchts";
+import * as searchts from "@mineru98/searchts";
 ```
 
 Make a query. There are three types of searches: object, array of objects, and single value.
@@ -316,9 +316,9 @@ let list = [
 	{ name: "John", age: 25 },
 	{ name: "Jill", age: 30 },
 ];
-matches = s.matchObject(list[0], { name: "Johnny" }); // returns false
-matches = s.matchArray(list, { name: "John" }); // returns [{name:"John",age:25}]
-matches = s.matchField(list[0].name, "John"); // returns true
+console.log(searchts.matchObject(list[0], { name: "Johnny" })); // returns false
+console.log(searchts.matchArray(list, { name: "John" })); // returns [{name:"John",age:25}]
+console.log(searchts.matchField(list[0].name, "John")); // returns true
 ```
 
 #### matchField
@@ -377,7 +377,7 @@ The comparator can be one of the following, and match based on the following com
 Most of the functionality in searchts has a given set of defaults. If you wish to override those defaults globally, you can do so as follows:
 
 ```typescript
-import * as searchts from "searchts";
+import * as searchts from "@mineru98/searchts";
 searchts.setDefaults(defaults);
 ```
 
