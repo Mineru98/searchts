@@ -34,6 +34,8 @@
 		"search-js",
 		"object-search",
 		"search-object",
+		"object-query",
+		"objectquery",
 		"query",
 		"sql"
 	],
@@ -41,6 +43,14 @@
 		"presets": [
 			"@babel/preset-typescript"
 		]
+	},
+	"prettier": {
+		"trailingComma": "es5",
+		"useTabs": true,
+		"tabWidth": 2,
+		"semi": true,
+		"singleQuote": false,
+		"printWidth": 160
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.5.5",
@@ -51,6 +61,7 @@
 		"@types/node": "^16.7.10",
 		"chai": "^4.3.4",
 		"codecov": "^3.6.5",
+		"cross-env": "7.0.3",
 		"mocha": "^9.1.1",
 		"nyc": "^12.0.2",
 		"should": "^13.2.1",
@@ -60,10 +71,10 @@
 	},
 	"scripts": {
 		"build": "npm run build:ts && npm run build:babel",
-		"build:ts": "rm -rf lib && tsc --out lib/searchts",
+		"build:ts": "rm -rf lib && tsc",
 		"build:babel": "babel lib --out-dir lib --extensions \".ts\" --source-maps inline",
-		"test": "NODE_ENV=test mocha -r ts-node/register ./test/test.ts --reporter spec",
-		"test-watch": "NODE_ENV=test mocha --watch -r ts-node/register ./test/test.ts --reporter spec",
+		"test": "cross-env NODE_ENV=test mocha -r ts-node/register ./test/test.ts --reporter spec",
+		"test-watch": "cross-env NODE_ENV=test mocha --watch -r ts-node/register ./test/test.ts --reporter spec",
 		"coverage": "nyc yarn test",
 		"prepublishOnly": "npm run build"
 	}

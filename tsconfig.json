@@ -1,21 +1,18 @@
 {
 	"compilerOptions": {
-		"target": "es5",
+		"target": "es6",
 		"module": "commonjs",
-		"lib": ["es5", "es6", "dom", "esnext"],
+		"lib": ["es6", "dom", "esnext"],
+		"outDir": "./lib",
+		"baseUrl": "src",
 		"allowJs": true,
 		"declaration": true,
-		"removeComments": true,
-		"emitDeclarationOnly": true,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"allowSyntheticDefaultImports": true,
 		"sourceMap": true,
-		"outDir": "./lib",
 		"strict": false,
-		"baseUrl": "src",
-		"incremental": true,
-		"typeRoots": ["./node_modules/@types"]
+		"removeComments": true,
+		"moduleResolution": "Node",
+		"noImplicitAny": false,
+		"noEmit": false
 	},
 	"include": ["src/**/*.ts", "test/**/*.ts"],
 	"exclude": ["node_modules", "lib"]

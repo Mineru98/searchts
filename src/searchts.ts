@@ -34,8 +34,7 @@ export function _singleMatch(field: any, s: any, text: boolean, word: boolean, r
 			if (s.from !== undefined || s.to !== undefined || s.gte !== undefined || s.lte !== undefined) {
 				from = s.from || s.gte;
 				to = s.to || s.lte;
-				oneMatch =
-					(s.from !== undefined || s.gte !== undefined ? field >= from : true) && (s.to !== undefined || s.lte !== undefined ? field <= to : true);
+				oneMatch = (s.from !== undefined || s.gte !== undefined ? field >= from : true) && (s.to !== undefined || s.lte !== undefined ? field <= to : true);
 			} else if (s.gt !== undefined || s.lt !== undefined) {
 				oneMatch = (s.gt !== undefined ? field > s.gt : true) && (s.lt !== undefined ? field < s.lt : true);
 			}
@@ -70,8 +69,7 @@ export function _singleMatch(field: any, s: any, text: boolean, word: boolean, r
 			if (s.from !== undefined || s.to !== undefined || s.gte !== undefined || s.lte !== undefined) {
 				from = s.from || s.gte;
 				to = s.to || s.lte;
-				oneMatch =
-					(s.from !== undefined || s.gte !== undefined ? field >= from : true) && (s.to !== undefined || s.lte !== undefined ? field <= to : true);
+				oneMatch = (s.from !== undefined || s.gte !== undefined ? field >= from : true) && (s.to !== undefined || s.lte !== undefined ? field <= to : true);
 			} else if (s.gt !== undefined || s.lt !== undefined) {
 				oneMatch = (s.gt !== undefined ? field > s.gt : true) && (s.lt !== undefined ? field < s.lt : true);
 			}
