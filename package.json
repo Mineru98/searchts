@@ -14,9 +14,9 @@
 	"engines": {
 		"node": ">=0.8"
 	},
-	"main": "./lib/searchts.ts",
-	"types": "./lib/index.d.ts",
-	"module": "src/searchts.ts",
+	"main": "lib/searchts.js",
+	"types": "lib/searchts.d.ts",
+	"module": "lib/searchts.js.map",
 	"files": [
 		"/lib",
 		"src"
