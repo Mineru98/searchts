@@ -396,7 +396,7 @@ As of this writing, the following defaults can be overridden:
 At any point, you can reset defaults by doing:
 
 ```typescript
-s.resetDefaults();
+searchts.resetDefaults();
 ```
 
 ```typescript

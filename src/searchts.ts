@@ -14,7 +14,7 @@ export function resetDefaults(): void {
 	_defaults = {} as IData;
 }
 
-export function _singleMatch(field: any, s: any, text: boolean, word: boolean, regexp: boolean, start: boolean, end: boolean): boolean {
+function _singleMatch(field: any, s: any, text: boolean, word: boolean, regexp: boolean, start: boolean, end: boolean): boolean {
 	let oneMatch: boolean = false,
 		t: string,
 		re: RegExp,
@@ -90,14 +90,14 @@ export function _singleMatch(field: any, s: any, text: boolean, word: boolean, r
 	return oneMatch;
 }
 
-export function matchArray(ary: IData[], search: ISearchOps) {
+export function matchArray(ary: IData[], searchOps: ISearchOps) {
 	let matched = false,
 		i,
 		ret = [],
-		options = _getOptions(search, _defaults as IDefault);
+		options = _getOptions(searchOps, _defaults as IDefault);
 	if (ary && ary.length > 0) {
 		for (i = 0; i < ary.length; i++) {
-			matched = _matchObj(ary[i], search, options);
+			matched = _matchObj(ary[i], searchOps, options);
 			if (matched) {
 				ret.push(ary[i]);
 			}
@@ -106,21 +106,21 @@ export function matchArray(ary: IData[], search: ISearchOps) {
 	return ret;
 }
 
-export function matchObject(obj: IData, search: ISearchOps): boolean {
-	const options = _getOptions(search, _defaults as IDefault);
-	return _matchObj(obj, search, options);
+export function matchObject(obj: IData, searchOps: ISearchOps): boolean {
+	const options = _getOptions(searchOps, _defaults as IDefault);
+	return _matchObj(obj, searchOps, options);
 }
 
-function _matchObj(obj: IData, search: ISearchOps = {} as ISearchOps, options: IOptions): boolean {
+function _matchObj(obj: IData, searchOps: ISearchOps = {} as ISearchOps, options: IOptions): boolean {
 	let i: string, j: number, matched: boolean, oneMatch: boolean, ary: ISearchOps[], searchTermParts: string[];
 
 	// if joinAnd, then matched=true until we have a single non-match; if !joinAnd, then matched=false until we have a single match
 	matched = !!options.joinAnd;
 
 	// are we a primitive or a composite?
-	if (search.terms) {
-		for (j = 0; j < search.terms.length; j++) {
-			oneMatch = matchObject(obj, search.terms[j]);
+	if (searchOps.terms) {
+		for (j = 0; j < searchOps.terms.length; j++) {
+			oneMatch = matchObject(obj, searchOps.terms[j]);
 			if (options.negator) {
 				oneMatch = !oneMatch;
 			}
@@ -136,11 +136,11 @@ function _matchObj(obj: IData, search: ISearchOps = {} as ISearchOps, options: I
 		}
 	} else {
 		// match to the search field
-		for (i in search) {
-			if (search.hasOwnProperty(i) && i.indexOf("_") !== 0) {
-				// match each one, if search[i] is an array - just concat to be safe
+		for (i in searchOps) {
+			if (searchOps.hasOwnProperty(i) && i.indexOf("_") !== 0) {
+				// match each one, if searchOps[i] is an array - just concat to be safe
 				searchTermParts = i.split(options.separator);
-				ary = [].concat(search[i]);
+				ary = [].concat(searchOps[i]);
 				for (j = 0; j < ary.length; j++) {
 					oneMatch = _singleMatch(
 						deepField(obj, searchTermParts, options.propertySearch, options.propertySearchDepth),
