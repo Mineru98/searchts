@@ -24,31 +24,31 @@ tsql _always_ is a single TypeScript object: `{}` with properties that determine
 
 There are three kinds of properties for a query:
 
--   Primitives: Primitives match one or more fields on AND or OR, with or without a negation.
--   Modifiers: Modifiers determine how the other properties are treated: negation, field join type, ranges and text searches.
--   Composites: Composites join multiple primitives. The primitives are in an array in the field "terms". See example 7.
+- Primitives: Primitives match one or more fields on AND or OR, with or without a negation.
+- Modifiers: Modifiers determine how the other properties are treated: negation, field join type, ranges and text searches.
+- Composites: Composites join multiple primitives. The primitives are in an array in the field "terms". See example 7.
 
 ### Primitives
 
 A primitive is an object with properties that are matched.
 
--   `{name:"John"}` - primitive that checks that the name field is equal to "John"
+- `{name:"John"}` - primitive that checks that the name field is equal to "John"
 
 Multiple fields in a primitive are, by default, joined by logical AND. See under Modifiers to change this.
 
--   `{name:"John",age:30}` - primitive that checks that the name field is equal to "John" AND that the age field is equal to 30
+- `{name:"John",age:30}` - primitive that checks that the name field is equal to "John" AND that the age field is equal to 30
 
 The name of a field in a primitive is _always_ the name of the field to match in the record. The value can be one of:
 
--   Basic types: string, number, date - will match directly against the value in the record. Case is **ignored** in string matches.
--   Array: will match against any one of the values in the array. See below.
--   Object: will look for a range. See below.
+- Basic types: string, number, date - will match directly against the value in the record. Case is **ignored** in string matches.
+- Array: will match against any one of the values in the array. See below.
+- Object: will look for a range. See below.
 
 Primitives will search against individual values and against one or more matches in an array. So the search `{name:"John"}` will match against any of the following objects:
 
--   `{name:"John"}`
--   `{name:["John","jim"]}`
--   `{name:["jim","John"]}`
+- `{name:"John"}`
+- `{name:["John","jim"]}`
+- `{name:["jim","John"]}`
 
 #### Deep Searching
 
@@ -72,8 +72,8 @@ Deep searching is not limited to objects embedded in objects. You can have array
 
 Thus, the search primitive `{"name.cars.hp":{from:200}}` will match any of the following:
 
--   `{cars: {brand: 'porsche',hp:450}}`
--   `{cars: [{brand: 'bmw',hp:250},{brand: 'lada',hp:10}]}` matches the 'bmw' but not the 'lada', therefore the whole object matches
+- `{cars: {brand: 'porsche',hp:450}}`
+- `{cars: [{brand: 'bmw',hp:250},{brand: 'lada',hp:10}]}` matches the 'bmw' but not the 'lada', therefore the whole object matches
 
 #### Property Search
 
@@ -211,11 +211,11 @@ The `_text` option will override the `_word` option if both exist.
 
 Here are some examples of text searching:
 
--   `{name:"davi"}` matches all of `{name:"davi"}, {name:"DAvi"}` but none of `{name:"david"}, {name:"abc davi def"}`
--   `{name:"davi",_word:true}` matches all of `{name:"davi"}, {name:"DAvi"}, {name:"abc davi def"}` but none of `{name:"david"}`
--   `{name:"davi",_text:true}` matches all of `{name:"davi"}, {name:"DAvi"}, {name:"abc davi def"}, {name:"abdavideq"}`
--   `{name:"davi",_start:true}` matches all of `{name:"davi"}, {name:"DAvi"}, {name:"davideq"}` but none of `{name:"abc davi def"}`
--   `{name:"davi",_end:true}` matches all of `{name:"asdadavi"}, {name:"asdsadDAvi"}` but none of `{name:"abdavideq"},{name:"abc davi def"}`
+- `{name:"davi"}` matches all of `{name:"davi"}, {name:"DAvi"}` but none of `{name:"david"}, {name:"abc davi def"}`
+- `{name:"davi",_word:true}` matches all of `{name:"davi"}, {name:"DAvi"}, {name:"abc davi def"}` but none of `{name:"david"}`
+- `{name:"davi",_text:true}` matches all of `{name:"davi"}, {name:"DAvi"}, {name:"abc davi def"}, {name:"abdavideq"}`
+- `{name:"davi",_start:true}` matches all of `{name:"davi"}, {name:"DAvi"}, {name:"davideq"}` but none of `{name:"abc davi def"}`
+- `{name:"davi",_end:true}` matches all of `{name:"asdadavi"}, {name:"asdsadDAvi"}` but none of `{name:"abdavideq"},{name:"abc davi def"}`
 
 #### Regular Expressions
 
@@ -224,8 +224,8 @@ A more generic form of word and text searching is regular expressions. You can u
 in their `/regex/` format as the value of the field. Because json does not
 support having regex as a value, you need to do two things to make this work:
 
--   quote it, so `{"name": "/ames/i"}` to match anything with "ames" in it, case-insensitive, and not `{"name": /ames/i}`, because that is invalid json
--   indicate that it is a regex by adding the modifier `"_regexp":true` to the query term.
+- quote it, so `{"name": "/ames/i"}` to match anything with "ames" in it, case-insensitive, and not `{"name": /ames/i}`, because that is invalid json
+- indicate that it is a regex by adding the modifier `"_regexp":true` to the query term.
 
 For example:
 
@@ -297,22 +297,22 @@ Next, require it using:
 
 ```ts
 // for commonjs
-var s = require("searchts");
+let s = require("searchts");
 // for es6
 import * as searchts from "searchts";
 ```
 
 Make a query. There are three types of searches: object, array of objects, and single value.
 
--   `matchObject(object,tsqlObject)`: matchObject returns boolean true or false, depending on whether or not the given object matches the given search.
--   `matchArray(array,tsqlObject)`: matchArray returns an array of items, subset of the passed array, that match match the given search.
--   `matchField(value,comparator,text,word)`: check if a single `value` matches a given comparator.
+- `matchObject(object,tsqlObject)`: matchObject returns boolean true or false, depending on whether or not the given object matches the given search.
+- `matchArray(array,tsqlObject)`: matchArray returns an array of items, subset of the passed array, that match match the given search.
+- `matchField(value,comparator,text,word)`: check if a single `value` matches a given comparator.
 
 All objects are stateless. The following examples show how to use matchObject and matchArray. For more details, look at the test.ts
 file included with searchts.
 
 ```typescript
-var list = [
+let list = [
 	{ name: "John", age: 25 },
 	{ name: "Jill", age: 30 },
 ];
@@ -327,10 +327,10 @@ matches = s.matchField(list[0].name, "John"); // returns true
 
 The argument structure is as follows:
 
--   `value`: a single value that is to be matched. It can be any item type, including string, number, date, boolean, array, object, null, undefined.
--   `comparator`: the rule for comparison. See below.
--   `text`: boolean. For strings only, determine whether to allow for `comparator` to exist anywhere in `value`, or if it must be an exact match. See below.
--   `word`: boolean. For strings only, determine whether `comparator` should exist as a single word in `value`, or if it must be an exact match.
+- `value`: a single value that is to be matched. It can be any item type, including string, number, date, boolean, array, object, null, undefined.
+- `comparator`: the rule for comparison. See below.
+- `text`: boolean. For strings only, determine whether to allow for `comparator` to exist anywhere in `value`, or if it must be an exact match. See below.
+- `word`: boolean. For strings only, determine whether `comparator` should exist as a single word in `value`, or if it must be an exact match.
 
 ##### String matching
 
@@ -358,19 +358,19 @@ matchField("This is a cool program", "This is a cool program"); // true
 
 The comparator can be one of the following, and match based on the following comparator rules
 
--   `null`: match if `value === null`
--   `undefined`: match if `value === undefined`
--   `true`: match if `value === true` (no casting is done, precise match)
--   `false`: match if `value === false` (no casting is done, precise match)
--   `number`: match if `value === comparator` (no casting is done, precise match)
--   `date`: match if `value === comparator` (no casting is done, use .getTime() for precise match)
--   `object` with range for numeric or date `value`: `{from: 12, to: 25}` or `{gt: 11, lt: 26}`. Match if `typeof(value) === "number"` and `value` is in the given range.
--   `string`: match if one of the following conditions is true:
-    -   (`typeof(value) === "string"`) and (`value === comparator`)
-    -   (`typeof(value) === "string"`) and (`value` contains `comparator`) and (`text === true`)
-    -   (`typeof(value) === "string"`) and (`value` contains a word equal to `comparator`) and (`word === true`)
-    -   (`typeof(value) === "object"`) and (`value[comparator] !=== undefined`)
--   Array: match each item in the array. Return `true` if a single item matches.
+- `null`: match if `value === null`
+- `undefined`: match if `value === undefined`
+- `true`: match if `value === true` (no casting is done, precise match)
+- `false`: match if `value === false` (no casting is done, precise match)
+- `number`: match if `value === comparator` (no casting is done, precise match)
+- `date`: match if `value === comparator` (no casting is done, use .getTime() for precise match)
+- `object` with range for numeric or date `value`: `{from: 12, to: 25}` or `{gt: 11, lt: 26}`. Match if `typeof(value) === "number"` and `value` is in the given range.
+- `string`: match if one of the following conditions is true:
+  - (`typeof(value) === "string"`) and (`value === comparator`)
+  - (`typeof(value) === "string"`) and (`value` contains `comparator`) and (`text === true`)
+  - (`typeof(value) === "string"`) and (`value` contains a word equal to `comparator`) and (`word === true`)
+  - (`typeof(value) === "object"`) and (`value[comparator] !=== undefined`)
+- Array: match each item in the array. Return `true` if a single item matches.
 
 ### Override Defaults
 
@@ -385,13 +385,13 @@ where `defaults` is an object with the property name and its new default. This c
 
 As of this writing, the following defaults can be overridden:
 
--   `negator`: boolean. Whether or not a search term should match on `true` or `false`. Defaults to `false`. If set to `true`, then searching `{name: "Jill"}` will match all those whose names are _not_ `"Jill"`, the equivalent of setting `{name: "Jill", _not: true}`.
--   `join`: String, whether to join search terms by default with a logical AND or logical OR. Defaults to `"AND"`. If set to `"OR"`, then searching `{name: "Jill", age: 30}` will match those whose name is `"Jill"` _OR_ who have the age of `30`, the equivalent of setting `{name: "Jill", age: 30, _join: "OR"}`.
--   text: boolean. Whether string values in searches should match text, i.e. as part of the field. Defaults to `false`. If set to `true`, then searching `{name: "Jill"}` will match those whose names are `"Jill"`, `"Jillian"`, "EJilli", the equivalent of searching for `{name: "Jill", _text:true}`.
--   word: boolean. Whether string values in searches should match word, i.e. as a complete word as part of the field. Defaults to `false`. If set to `true`, then searching `{name: "Jill"}` will match those whose names are `"Jill"`, `"Hi Jill Smith"`, the equivalent of searching for `{name: "Jill", _word:true}`.
--   separator: The character to use as the separator for deep searching. Defaults to `'.'`. Changing it, for example, to `':'` and then searching for `{"city:Montreal": "Bagels"}` is the equivalent of `{"city:Montreal": "Bagels", _separator: ":"}`.
--   propertySearch: Whether to use deep property matching by default. Defaults to `false`. If set to `true`, then will always do deep property searching. Searching for `{name: "Jill"}` will be the equivalent of `{name: "Jill", _propertySearch: true}`.
--   propertySearchDepth: How deep to do deep property searches by default. Defaults to `-1`, i.e. infinite depth.
+- `negator`: boolean. Whether or not a search term should match on `true` or `false`. Defaults to `false`. If set to `true`, then searching `{name: "Jill"}` will match all those whose names are _not_ `"Jill"`, the equivalent of setting `{name: "Jill", _not: true}`.
+- `join`: String, whether to join search terms by default with a logical AND or logical OR. Defaults to `"AND"`. If set to `"OR"`, then searching `{name: "Jill", age: 30}` will match those whose name is `"Jill"` _OR_ who have the age of `30`, the equivalent of setting `{name: "Jill", age: 30, _join: "OR"}`.
+- text: boolean. Whether string values in searches should match text, i.e. as part of the field. Defaults to `false`. If set to `true`, then searching `{name: "Jill"}` will match those whose names are `"Jill"`, `"Jillian"`, "EJilli", the equivalent of searching for `{name: "Jill", _text:true}`.
+- word: boolean. Whether string values in searches should match word, i.e. as a complete word as part of the field. Defaults to `false`. If set to `true`, then searching `{name: "Jill"}` will match those whose names are `"Jill"`, `"Hi Jill Smith"`, the equivalent of searching for `{name: "Jill", _word:true}`.
+- separator: The character to use as the separator for deep searching. Defaults to `'.'`. Changing it, for example, to `':'` and then searching for `{"city:Montreal": "Bagels"}` is the equivalent of `{"city:Montreal": "Bagels", _separator: ":"}`.
+- propertySearch: Whether to use deep property matching by default. Defaults to `false`. If set to `true`, then will always do deep property searching. Searching for `{name: "Jill"}` will be the equivalent of `{name: "Jill", _propertySearch: true}`.
+- propertySearchDepth: How deep to do deep property searches by default. Defaults to `-1`, i.e. infinite depth.
 
 At any point, you can reset defaults by doing:
 
@@ -400,7 +400,7 @@ s.resetDefaults();
 ```
 
 ```typescript
-var list = [
+let list = [
 	{ name: "John", age: 25 },
 	{ name: "Jill", age: 30 },
 ];
