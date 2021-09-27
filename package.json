@@ -76,6 +76,6 @@
 		"test": "cross-env NODE_ENV=test mocha -r ts-node/register ./test/test.ts --reporter spec",
 		"test-watch": "cross-env NODE_ENV=test mocha --watch -r ts-node/register ./test/test.ts --reporter spec",
 		"coverage": "nyc yarn test",
-		"prepublishOnly": "npm run build && npm publish"
+		"prepublishOnly": "npm run build"
 	}
 }
