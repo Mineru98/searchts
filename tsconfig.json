@@ -2,10 +2,6 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "es6",
-		"lib": ["es2017"],
-		"outDir": "./lib",
-		"baseUrl": "src",
-		"allowJs": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"sourceMap": true,
@@ -15,8 +11,9 @@
 		"skipLibCheck": true,
 		"pretty": true,
 		"removeComments": true,
-		"strict": false
+		"outDir": "./lib",
+		"lib": ["es2017"]
 	},
-	"include": ["src/**/*.ts"],
+	"include": ["src"],
 	"exclude": ["node_modules", "test"]
 }
