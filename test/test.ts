@@ -1,7 +1,7 @@
 /*jslint node:true, nomen:true */
 /*global it, describe, before, after */
 import { matchObject, matchArray, setDefaults, resetDefaults } from "../src/searchts";
-const should = require("should");
+require("should");
 let data, searches;
 
 data = [
