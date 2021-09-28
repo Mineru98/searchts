@@ -36,7 +36,11 @@
 		"object-query",
 		"objectquery",
 		"query",
-		"sql"
+		"sql",
+		"json",
+		"node",
+		"typescript",
+		"filter"
 	],
 	"babel": {
 		"presets": [
