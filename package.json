@@ -1,7 +1,7 @@
 {
 	"name": "@mineru98/searchts",
 	"description": "A library for filtering TypeScript objects based on a json SQL-like language, tsql",
-	"version": "1.1.7",
+	"version": "1.1.8",
 	"url": "http://github.com/Mineru98/searchts",
 	"author": "Mineru (https://github.com/Mineru98)",
 	"license": "MIT",
