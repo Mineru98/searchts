@@ -1,17 +1,17 @@
 import { toType, deepField } from "./util";
-import { IDefault, IData, ISearchOps, IOptions, _getOptions } from "./option";
+import { Default, Data, SearchOps, Options, _getOptions } from "./option";
 
-let _defaults: IData = {} as IData;
+let _defaults: Data = {} as Data;
 
 // Allows to overwrite the global default values
-export function setDefaults(options: IData): void {
+export function setDefaults(options: Data): void {
 	for (const key in options) {
 		_defaults[key] = options[key];
 	}
 }
 
 export function resetDefaults(): void {
-	_defaults = {} as IData;
+	_defaults = {} as Data;
 }
 
 function _singleMatch(field: any, s: any, text: boolean, word: boolean, regexp: boolean, start: boolean, end: boolean): boolean {
@@ -90,11 +90,11 @@ function _singleMatch(field: any, s: any, text: boolean, word: boolean, regexp: 
 	return oneMatch;
 }
 
-export function matchArray(ary: IData[], searchOps: ISearchOps) {
+export function matchArray(ary: Data[], searchOps: SearchOps) {
 	let matched = false,
 		i,
 		ret = [],
-		options = _getOptions(searchOps, _defaults as IDefault);
+		options = _getOptions(searchOps, _defaults as Default);
 	if (ary && ary.length > 0) {
 		for (i = 0; i < ary.length; i++) {
 			matched = _matchObj(ary[i], searchOps, options);
@@ -106,13 +106,13 @@ export function matchArray(ary: IData[], searchOps: ISearchOps) {
 	return ret;
 }
 
-export function matchObject(obj: IData, searchOps: ISearchOps): boolean {
-	const options = _getOptions(searchOps, _defaults as IDefault);
+export function matchObject(obj: Data, searchOps: SearchOps): boolean {
+	const options = _getOptions(searchOps, _defaults as Default);
 	return _matchObj(obj, searchOps, options);
 }
 
-function _matchObj(obj: IData, searchOps: ISearchOps = {} as ISearchOps, options: IOptions): boolean {
-	let i: string, j: number, matched: boolean, oneMatch: boolean, ary: ISearchOps[], searchTermParts: string[];
+function _matchObj(obj: Data, searchOps: SearchOps = {} as SearchOps, options: Options): boolean {
+	let i: string, j: number, matched: boolean, oneMatch: boolean, ary: SearchOps[], searchTermParts: string[];
 
 	// if joinAnd, then matched=true until we have a single non-match; if !joinAnd, then matched=false until we have a single match
 	matched = !!options.joinAnd;

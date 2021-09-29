@@ -5,14 +5,14 @@ export function toType(obj: any): string {
 		.toLowerCase();
 }
 
-interface IData {
+interface Data {
 	[key: string]: any;
 }
 
 // 개체에서 키와 일치하는 항목을 반환합니다.
 // 'dot-notation'를 다룰 수 있을 만큼 똑똑하다.
 // 따라서 "a.b"는 obj["a.b"] 또는 obj["a"]["b"](있는 경우)를 반환합니다.
-export function deepField(data: IData[] | IData, propertyPath: string[], propertySearch: boolean, propertySearchDepth: number) {
+export function deepField(data: Data[] | Data, propertyPath: string[], propertySearch: boolean, propertySearchDepth: number) {
 	let ret = null,
 		i,
 		copyPropertyPath,

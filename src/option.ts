@@ -1,4 +1,4 @@
-interface ICommon {
+interface Common {
 	negator: boolean;
 	text: boolean;
 	word: boolean;
@@ -10,19 +10,19 @@ interface ICommon {
 	propertySearchDepth: number;
 }
 
-export interface IData {
+export interface Data {
 	[key: string]: any;
 }
-export interface IOptions extends ICommon {
+export interface Options extends Common {
 	joinAnd: boolean;
 }
 
-export interface IDefault extends ICommon {
+export interface Default extends Common {
 	join: "AND" | "OR";
 }
 
-export interface ISearchOps extends IData {
-	terms?: IData[];
+export interface SearchOps extends Data {
+	terms?: Data[];
 	_not?: boolean;
 	_join?: "AND" | "OR";
 	_text?: boolean;
@@ -45,8 +45,8 @@ function _getSingleOpt<T, R>(first: T, override: T, fallback: R): T | R {
 	}
 }
 
-export function _getOptions(search: ISearchOps = {} as ISearchOps, _defaults: IDefault): IOptions {
-	const options: IOptions = {} as IOptions;
+export function _getOptions(search: SearchOps = {} as SearchOps, _defaults: Default): Options {
+	const options: Options = {} as Options;
 
 	// 부정문이 있나요?
 	//options.negator = search._not ? true : _defaults.negator || false;
